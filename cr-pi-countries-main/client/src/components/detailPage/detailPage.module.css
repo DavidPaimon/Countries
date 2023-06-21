@@ -1,0 +1,35 @@
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.flag {
+  width: 200px;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.countryInfo {
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.error {
+  color: red;
+}

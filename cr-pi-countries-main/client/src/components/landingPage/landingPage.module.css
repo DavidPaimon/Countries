@@ -1,0 +1,50 @@
+body {
+  background-image: url('../../assets/earth.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.background {
+  height: 1vh;
+  width: 100%;
+  display: grid;
+  background-image: url('../../assets/MoonlitAsteroid.jpg');
+  margin: 150px auto 0;
+  border-radius: 18px;
+}
+
+.background {
+  background-color: transparent;
+}
+
+.leboton {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.paimon {
+  color: #ffffff;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.lpbtn {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.lpbtn:hover {
+  background-color: #000000;
+}
+
+.start {
+  color: #289d46;
+}

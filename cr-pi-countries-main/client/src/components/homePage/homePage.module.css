@@ -1,0 +1,38 @@
+/* homePage.module.css */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+  
+  .pageButton {
+    background-color: #f2f2f2;
+    border: none;
+    color: #4CAF50;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pageButton:hover {
+    background-color: #000000;
+  }
+  
+  .selectedPageButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+  }
+  

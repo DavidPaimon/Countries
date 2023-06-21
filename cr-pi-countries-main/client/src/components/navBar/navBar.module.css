@@ -1,0 +1,41 @@
+/* navBar.module.css */
+
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+  }
+  
+  .navBarbutton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navBarbutton:hover {
+    background-color: #238126;
+  }
+  
+  .search {
+    margin-right: 10px;
+  }
+  
+  .orders select,
+  .filter select {
+    margin-right: 10px;
+  }
+  
+  .activity {
+    margin-left: 10px;
+  }
+  

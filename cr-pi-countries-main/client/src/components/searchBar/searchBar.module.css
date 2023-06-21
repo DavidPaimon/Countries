@@ -1,0 +1,23 @@
+.searchInput{
+    font-family: monospace;
+    width: 170px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(53, 173, 57);
+    font-size: small;
+    position: relative;
+    border-radius: 30px;
+    padding: 4.5px;
+    border: 0;
+}
+
+.search p{
+    color: azure;
+    text-align: center;
+    font-family: monospace;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
