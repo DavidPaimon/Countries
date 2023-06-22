@@ -181,7 +181,7 @@ const ActivityForm = ()=>{
             <br/><br/>
 
             <div className={style.submit}>
-                <button>Create activity</button>
+                <button>CREATE ACTIVITY</button>
             </div>
 
         </form>
