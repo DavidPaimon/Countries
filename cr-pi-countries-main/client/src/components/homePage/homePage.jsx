@@ -1,71 +1,158 @@
-import React, { useState,useEffect } from 'react';
-import {  useSelector, } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import CountryCard from '../countryCard/countryCard';
+import style from './homePage.module.css';
 
-import CountryCard from '../countryCard/countryCard'
-import style from './homePage.module.css'
-
-const countriesPerPage = 10
+const countriesPerPage = 10;
 const visiblePageButtons = 5;
 
-const HomePage = ()=>{
+const HomePage = () => {
+  const allcountries = useSelector((state) => state.country.allCountries);
 
-    const allcountries = useSelector(state=>state.country.allCountries)
+  const [totalPages, setTotalPages] = useState(0);
+  const [page, setPage] = useState(0);
 
-    const [totalPages,setTotalPages] = useState(0)
+  useEffect(() => {
+    setTotalPages(Math.ceil(allcountries.length / countriesPerPage));
+    setPage(0);
+  }, [allcountries]);
 
-    const [page,setPage] = useState(0)
+  if (allcountries.length === 0) return <h1 className={style.loading}>Loading Countries ...</h1>;
 
-    useEffect(()=>{
-        setTotalPages(Math.ceil(allcountries.length/countriesPerPage))
-        setPage(0)
-    },[allcountries])
+  const renderPageButtons = () => {
 
-    if(allcountries.length === 0) return <h1 className={style.loading}>Loading Countries ...</h1>
-    
-    const renderPageButtons = () => {
-        const startPage = Math.max(0, Math.min(page - Math.floor(visiblePageButtons / 2), totalPages - visiblePageButtons));
-        const endPage = Math.min(startPage + visiblePageButtons, totalPages);
-    
-        return Array.from({ length: endPage - startPage }).map((_, i) => {
-            const pageNumber = startPage + i;
-            const buttonClass = pageNumber === page ? style.selectedPageButton : style.pageButton; // Aplica estilos diferentes a la página seleccionada
+    const startPage = Math.max(0, Math.min(page - Math.floor(visiblePageButtons / 2), totalPages - visiblePageButtons));
+    const endPage = Math.min(startPage + visiblePageButtons, totalPages);
+
+    return Array.from({ length: endPage - startPage }).map((_, i) => {
+      const pageNumber = startPage + i;
+      const buttonClass = pageNumber === page ? style.selectedPageButton : style.pageButton; // Aplica estilos diferentes a la página seleccionada
+      return (
+        <button className={buttonClass} type="" key={pageNumber} onClick={() => setPage(pageNumber)}>
+          {pageNumber + 1}
+        </button>
+      );
+    });
+  };
+
+  return (
+    <div>
+      <div className={style.pagination}>
+        {page > 0 && (
+          <button key={'<<'} className={style.pageButton} type="" onClick={() => setPage(0)}>
+            {'<<'}
+          </button>
+        )}
+        {renderPageButtons()}
+        {page < totalPages - 1 && (
+          <button key={'>>'} className={style.pageButton} type="" onClick={() => setPage(totalPages - 1)}>
+            {'>>'}
+          </button>
+        )}
+      </div>
+
+      <div className={style.container}>
+        {allcountries
+          .slice(0 + page * countriesPerPage, countriesPerPage + page * countriesPerPage)
+          .map(({ id, name, continents, flags }) => {
             return (
-                <button className={buttonClass} type="" key={pageNumber} onClick={() => setPage(pageNumber)}>{pageNumber + 1}</button>
+              <React.Fragment key={id + ' ' + name}>
+                <CountryCard id={id} name={name} continents={continents} flags={flags} />
+              </React.Fragment>
             );
-        });
-    };
+          })}
+      </div>
+    </div>
+  );
+};
 
-    return (
-        <div>
-            <div className={style.pagination}>
-                {page > 0 && (
-                    <button key={'<<'} className={style.pageButton} type="" onClick={() => setPage(0)}>{'<<'}</button>
-                )}
-                {renderPageButtons()}
-                {page < totalPages -1 && (
-                    <button key={'>>'} className={style.pageButton} type="" onClick={() => setPage(totalPages - 1)}>{'>>'}</button>
-                )}
-            </div>
+export default HomePage;
 
-            <div className={style.container}>
-                {
-                    allcountries.slice(0 + (page * countriesPerPage), countriesPerPage + (page * countriesPerPage)).map(({id,name,continents,flags})=>{
-                        return(
-                            <>
-                                <CountryCard
-                                    id={id}
-                                    key={id+' '+name}
-                                    name={name}
-                                    continents={continents}
-                                    flags={flags}
-                                />
-                            </>
-                        )
-                    })
-                }
-            </div>
-        </div>
-    )
-}
 
-export default HomePage
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useSelector } from 'react-redux';
+// import CountryCard from '../countryCard/countryCard';
+// import style from './homePage.module.css';
+
+// const countriesPerPage = 10;
+// const visiblePageButtons = 5;
+
+// const HomePage = () => {
+//   const allcountries = useSelector((state) => state.country.allCountries);
+
+//   const [totalPages, setTotalPages] = useState(0);
+//   const [page, setPage] = useState(0);
+
+//   useEffect(() => {
+//     setTotalPages(Math.ceil(allcountries.length / countriesPerPage));
+//     setPage(localStorage.getItem('currentPage') || 0);
+//   }, [allcountries]);
+
+//   useEffect(() => {
+//     localStorage.setItem('currentPage', page);
+//   }, [page]);
+
+//   if (allcountries.length === 0) return <h1 className={style.loading}>Loading Countries ...</h1>;
+
+//   const renderPageButtons = () => {
+//     if (totalPages === 1) return null; // No renderizar los botones de paginación si solo hay una página
+
+//     const startPage = Math.max(0, Math.min(page - Math.floor(visiblePageButtons / 2), totalPages - visiblePageButtons));
+//     const endPage = Math.min(startPage + visiblePageButtons, totalPages);
+
+//     return Array.from({ length: endPage - startPage }).map((_, i) => {
+//       const pageNumber = startPage + i;
+//       const buttonClass = pageNumber === page ? style.selectedPageButton : style.pageButton; // Aplica estilos diferentes a la página seleccionada
+//       return (
+//         <button className={buttonClass} type="" key={pageNumber} onClick={() => setPage(pageNumber)}>
+//           {pageNumber + 1}
+//         </button>
+//       );
+//     });
+//   };
+
+//   return (
+//     <div>
+//       <div className={style.pagination}>
+//         {page > 0 && (
+//           <button key={'<<'} className={style.pageButton} type="" onClick={() => setPage(0)}>
+//             {'<<'}
+//           </button>
+//         )}
+//         {renderPageButtons()}
+//         {page < totalPages - 1 && (
+//           <button key={'>>'} className={style.pageButton} type="" onClick={() => setPage(totalPages - 1)}>
+//             {'>>'}
+//           </button>
+//         )}
+//       </div>
+
+//       <div className={style.container}>
+//         {allcountries
+//           .slice(0 + page * countriesPerPage, countriesPerPage + page * countriesPerPage)
+//           .map(({ id, name, continents, flags }) => {
+//             return (
+//               <React.Fragment key={id + ' ' + name}>
+//                 <CountryCard id={id} name={name} continents={continents} flags={flags} />
+//               </React.Fragment>
+//             );
+//           })}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default HomePage;

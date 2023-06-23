@@ -6,7 +6,7 @@ const { postActivity } = require("../controllers/Activity/postActivity");
 const { getActivity } = require("../controllers/Activity/getActivity");
 const router = Router();
 
-router.get('/countries', async(req,res)=>{
+router.get('/countries', async(req,res)=>{      //define una ruta get para /countries. Si no se proporciona el par de consulta name, llama a la fun getCountries y devuelve los paises obtenidos. Si se da el name, llama a ala fun getCountryByName y devuelve el país filtrado por ese name
     const {name} = req.query
 
     if(!name){
@@ -31,7 +31,7 @@ router.get('/countries', async(req,res)=>{
 
 })
 
-router.get('/countries/:id',async(req,res)=>{
+router.get('/countries/:id',async(req,res)=>{       //define una ruta get para /countries/:id donde :id es un param variable en la URL. Llama a la fun getCountryById y devuelve un país correspondiente al id dado
     const {id} = req.params
     
     try {
@@ -43,7 +43,7 @@ router.get('/countries/:id',async(req,res)=>{
     }
 })
 
-router.post('/activities', async(req,res)=>{
+router.post('/activities', async(req,res)=>{        //define una ruta POST para /activities. Obtiene los datos del cuerpo de la solicitud (datos como name, season...). realiza algunas transformaciones en los datos y llama a la fun postActivity para crear una nueva actividad.
     const {name,dificulty,duration,season,countries} = req.body
     const newName= name.trim().toLowerCase();
     const newDuration= duration.trim().toLowerCase();
@@ -56,7 +56,7 @@ router.post('/activities', async(req,res)=>{
     }
 })
 
-router.get('/activities', async(req,res)=>{
+router.get('/activities', async(req,res)=>{     //define una ruta get para /activities. Llama a la fun getActivity y devuelve todas las actividades
     try {
         const activities = await getActivity()
         res.status(200).send(activities)

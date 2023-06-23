@@ -20,3 +20,6 @@ const getActivity = async () => {
 module.exports = {
   getActivity
 }
+
+//este código obtiene todas las actividades turísticas de la base de datos y también incluye los países asociados a cada actividad. 
+//La función 'getActivity' devuelve los resultados de la consulta, lo que permite acceder a las actividades y sus países asociados desde otros archivos.

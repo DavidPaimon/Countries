@@ -69,7 +69,7 @@ const ActivityForm = ()=>{
         setError(errorValidate)
     }
 
-    const handleClick= (event,id)=>{
+    const handleClick= (event,id)=>{    //se ejecuta cuando se hace clic en un botón para eliminar un país asignado a la actividad. Actualiza el estado de activityData eliminando el país correspondiente.
         event.preventDefault()
         setActivityData({
             ...activityData,
@@ -77,22 +77,22 @@ const ActivityForm = ()=>{
         })
     }
 
-    const handleSubmit = async(event)=>{
+    const handleSubmit = async(event)=>{    //se ejecuta cuando se envía el formulario. Primero, comprueba si no hay mensajes de error en el estado error
         event.preventDefault()
         if(Object.values(error).length===0){
             
             try {
-                const {data} = await axios.post(URL,activityData)
+                const {data} = await axios.post(URL,activityData)   //Si no hay errores, realiza una solicitud POST a la URL especificada con los datos de la actividad
                 dispatch(postActivity(data))
                 
                 const info = await axios(URL)                
-                dispatch(getActivities(info.data))
+                dispatch(getActivities(info.data))  //despacha las acciones postActivity y getActivities para actualizar el estado de Redux con la nueva actividad y obtener la lista actualizada de actividades
                 
-                window.alert("¡¡Activity Created!!")
-                navigate('/home')
+                window.alert("¡Activity Created!")
+                navigate('/home')                   //muestra una alerta, vanega a la ruta /home y maneja errores si ocurren
                
             } catch (error) {
-                throw window.alert("There is an option without data")
+                throw window.alert("There is an option without data")  //si hacen falta datos nos advertira con un alert
             }
         }
     }
