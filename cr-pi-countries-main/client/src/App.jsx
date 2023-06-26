@@ -15,7 +15,7 @@ import ActivityForm from './components/activityForm/activityForm'
 
 function App() {
   
-  const {pathname} = useLocation()
+  const {pathname} = useLocation()  //obtenemos la ubicación actual de la página
 
   const dispatch = useDispatch()
 
@@ -24,12 +24,12 @@ function App() {
   const URLA = 'http://localhost:3001/activities'
 
   useEffect(()=>{
-    const getallCountries= async()=>{
+    const getallCountries= async()=>{ //realizamos solicitudes HTTP a las URL especificadas
         try {
-          const {data} = await axios(URL)
+          const {data} = await axios(URL) //obtenemos los datos de los países de la URL y se envían a la acción getCountries para actualizar el estado de Redux
           dispatch(getCountries(data))
     
-          const res= await axios(URLA)
+          const res= await axios(URLA)    //se obtienen los datos de las actividades de la URL y se envían a la acción getActivities para actualizar el estado de Redux
           dispatch(getActivities(res.data))
             
         }catch (error) {
@@ -44,7 +44,7 @@ function App() {
     <div >
 
       {pathname!=='/' ? <NavBar/>:''}
-
+      
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/home' element={<HomePage/>}/>

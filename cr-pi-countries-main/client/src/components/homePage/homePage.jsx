@@ -3,34 +3,40 @@ import { useSelector } from 'react-redux';
 import CountryCard from '../countryCard/countryCard';
 import style from './homePage.module.css';
 
-const countriesPerPage = 10;
-const visiblePageButtons = 5;
+const countriesPerPage = 10;  //número de países por página
+const visiblePageButtons = 5; //número de botones de página
 
 const HomePage = () => {
-  const allcountries = useSelector((state) => state.country.allCountries);
+  const allcountries = useSelector((state) => state.country.allCountries);  //parte del estado de Redux obtenido mediante un useSelector que contiene la lista de todos los países
 
-  const [totalPages, setTotalPages] = useState(0);
-  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0); //estado local que almacena el número total de páginas
+  const [page, setPage] = useState(0);             //estado local que almacena la página actual
 
   useEffect(() => {
-    setTotalPages(Math.ceil(allcountries.length / countriesPerPage));
-    setPage(0);
+    setTotalPages(Math.ceil(allcountries.length / countriesPerPage));  //se ejecuta cuando allCountries cambia. Calcula el número total de páginas con Math.ceil y establece totalPages y page en el estado local
+    setPage(localStorage.getItem('currentPage') || 0);                                                        //
   }, [allcountries]);
 
-  if (allcountries.length === 0) return <h1 className={style.loading}>Loading Countries ...</h1>;
+  useEffect(() => {
+    localStorage.setItem('currentPage', page);
+  }, [page]);
 
-  const renderPageButtons = () => {
+  if (allcountries.length === 0) return <h1 className={style.loading}>Loading Countries... </h1>;
+
+  const renderPageButtons = () => {   //esta función se usa para generar los botones de página en función del número total de páginas y la página actual
+
+    if (totalPages === 1) return null;
 
     const startPage = Math.max(0, Math.min(page - Math.floor(visiblePageButtons / 2), totalPages - visiblePageButtons));
     const endPage = Math.min(startPage + visiblePageButtons, totalPages);
 
-    return Array.from({ length: endPage - startPage }).map((_, i) => {
+    return Array.from({ length: endPage - startPage }).map((_, i) => {    //generamos los botones mediante el bucle map
       const pageNumber = startPage + i;
-      const buttonClass = pageNumber === page ? style.selectedPageButton : style.pageButton; // Aplica estilos diferentes a la página seleccionada
+      const buttonClass = pageNumber === page ? style.selectedPageButton : style.pageButton;
       return (
         <button className={buttonClass} type="" key={pageNumber} onClick={() => setPage(pageNumber)}>
           {pageNumber + 1}
-        </button>
+        </button>  //al hacer clic en un botón de página, se llama a la función setPage para actualizar la página actual
       );
     });
   };
@@ -53,12 +59,12 @@ const HomePage = () => {
 
       <div className={style.container}>
         {allcountries
-          .slice(0 + page * countriesPerPage, countriesPerPage + page * countriesPerPage)
+          .slice(0 + page * countriesPerPage, countriesPerPage + page * countriesPerPage)  //la lista se segmenta según la página actual usando el método slice
           .map(({ id, name, continents, flags }) => {
             return (
               <React.Fragment key={id + ' ' + name}>
                 <CountryCard id={id} name={name} continents={continents} flags={flags} />
-              </React.Fragment>
+              </React.Fragment> //la lista de países se muestra usando el componente countryCard
             );
           })}
       </div>

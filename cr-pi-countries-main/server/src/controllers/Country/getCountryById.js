@@ -18,4 +18,3 @@ module.exports = {
 }
 
 //este código busca un país en la base de datos utilizando su ID y devuelve el país encontrado o 'null' si no se encuentra.
-//La función 'getCountryById' se exporta para que pueda ser utilizada por otros archivos.
